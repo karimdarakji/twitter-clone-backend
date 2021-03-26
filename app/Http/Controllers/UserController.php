@@ -41,4 +41,8 @@ class UserController extends Controller
     // $user = User::select('name','profile_picture')->where('name',$req->name)->first();
      return User::find($id);
  }
+ /*function searchuser($key)
+ {
+      return User::where('name','Like',"%$key%")->get();
+ }*/
 }

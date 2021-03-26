@@ -33,6 +33,11 @@ class TweetController extends Controller
         return ["result"=>"product has been deleted"];
         }
     }
+    function searchtweet($key)
+    {
+        return Tweets::where('text','Like',"%$key%")->get();
+
+    }
     
     
 }

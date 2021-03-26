@@ -28,4 +28,5 @@ Route::post('tweet',[TweetController::class,'tweet']);
 Route::get('gettweets',[TweetController::class,'gettweets']);
 Route::get('getuser/{id}',[UserController::class,'getuser']);
 Route::delete('delete/{id}',[TweetController::class,'delete']);
+Route::get('searchtweet/{key}',[TweetController::class,'searchtweet']);
 
