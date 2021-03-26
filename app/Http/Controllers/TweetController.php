@@ -22,8 +22,16 @@ class TweetController extends Controller
     }
     function gettweets(Request $req){
        // $user = User::select('id')->first();
-        $tweet = Tweets::select('name','text','picture')->orderBy('created_at','desc')->get();
+        $tweet = Tweets::select('id','tweet_id','name','text','picture')->orderBy('created_at','desc')->get();
         return $tweet;
+    }
+    function delete($id)
+    {
+        $result = Tweets::where('id',$id)->delete();
+        if($result)
+        {
+        return ["result"=>"product has been deleted"];
+        }
     }
     
     

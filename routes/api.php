@@ -26,5 +26,6 @@ Route::post('uploadProfileImage',[UserController::class,'uploadProfileImage']);
 Route::get('getprofilepicture',[UserController::class,'getprofilepicture']);
 Route::post('tweet',[TweetController::class,'tweet']);
 Route::get('gettweets',[TweetController::class,'gettweets']);
-Route::post('getuser',[UserController::class,'getuser']);
+Route::get('getuser/{id}',[UserController::class,'getuser']);
+Route::delete('delete/{id}',[TweetController::class,'delete']);
 
