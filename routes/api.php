@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TweetController;
+use App\Http\Controllers\FollowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,7 @@ Route::get('gettweets',[TweetController::class,'gettweets']);
 Route::get('getuser/{id}',[UserController::class,'getuser']);
 Route::delete('delete/{id}',[TweetController::class,'delete']);
 Route::get('searchtweet/{key}',[TweetController::class,'searchtweet']);
+Route::post('follow/{id_sender}/{id_receiver}',[FollowController::class,'follow']);
+Route::get('check/{id_sender}/{id_receiver}',[FollowController::class,'check']);
+Route::delete('unfollow/{id_sender}/{id_receiver}',[FollowController::class,'unfollow']);
 
