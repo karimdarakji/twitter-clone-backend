@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Follow;
 
 class UserController extends Controller
 {
@@ -45,4 +46,12 @@ class UserController extends Controller
  {
       return User::where('name','Like',"%$key%")->get();
  }*/
+ function getuser_notfollowed($id)
+ {
+    $test = Follow::select('receiver_id')->where('sender_id',$id)->get();
+
+    $user = User::select('id','name','profile_picture')->whereNotIn('id',$test)->where('id','!=',$id)->get();
+
+     return $user;
+ }
 }

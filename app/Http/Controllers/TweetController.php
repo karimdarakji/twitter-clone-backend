@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Tweets;
+use App\Models\Follow;
 class TweetController extends Controller
 {
     function tweet(Request $req){
@@ -20,9 +21,11 @@ class TweetController extends Controller
         
         return $tweet;
     }
-    function gettweets(Request $req){
-       // $user = User::select('id')->first();
-        $tweet = Tweets::select('id','tweet_id','name','text','picture')->orderBy('created_at','desc')->get();
+    function gettweets($id){
+    
+       $user = Follow::select('receiver_id','sender_id')->where('sender_id',$id)->get();
+       $user = collect($user->toArray())->flatten()->all();
+       $tweet = Tweets::select('tweet_id','name','text','picture')->whereIn('tweet_id',$user)->orderBy('created_at','desc')->get();
         return $tweet;
     }
     function delete($id)
