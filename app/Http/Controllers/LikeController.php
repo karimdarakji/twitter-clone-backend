@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Like;
 use App\Models\Tweets;
+use \Illuminate\Support\Facades\DB;
+
 
 class LikeController extends Controller
 {
@@ -17,6 +19,15 @@ class LikeController extends Controller
         //$like = Like::insertOrIgnore(['tweet_id'=>$tweet,'liked_by'=>$user]);
       //  $tweetlike = Tweets::where('id',$req->tweet_id)->increment('likes');
         return $like;  
+
+    }
+    function getownlikes($id)
+    {
+      $get = DB::table('likes')->select('likes.tweet_id',DB::raw('tweets.name,tweets.text,tweets.picture'))
+      ->leftjoin('tweets','likes.tweet_id','=','tweets.id')
+      ->where('liked_by',$id)
+      ->get();
+      return $get;
 
     }
     function getlike($user)

@@ -38,6 +38,8 @@ Route::post('tweet',[TweetController::class,'tweet']);
 Route::get('gettweets/{id}',[TweetController::class,'gettweets']);
 Route::delete('delete/{id}',[TweetController::class,'delete']);
 Route::get('searchtweet/{key}',[TweetController::class,'searchtweet']);
+Route::get('getowntweets/{id}',[TweetController::class,'getowntweets']);
+
 
 //Follow controller
 Route::post('follow/{id_sender}/{id_receiver}',[FollowController::class,'follow']);
@@ -48,11 +50,15 @@ Route::delete('unfollow/{id_sender}/{id_receiver}',[FollowController::class,'unf
 Route::post('like/{user}',[LikeController::class,'like']);
 Route::get('getlike/{user}',[LikeController::class,'getlike']);
 Route::delete('deletelike/{user}/{tweet_id}',[LikeController::class,'deletelike']);
+Route::get('getownlikes/{id}',[LikeController::class,'getownlikes']);
+
 
 //Comment controller
 Route::post('comment/{tweetid}/{user}',[CommentController::class,'comment']);
 Route::get('getcomment/{tweetid}',[CommentController::class,'getcomment']);
-Route::delete('deletecomment/{user}/{tweet_id}',[CommentController::class,'deletecomment']);
+Route::delete('deletecomment/{id}',[CommentController::class,'deletecomment']);
+Route::get('getowncomments/{id}',[CommentController::class,'getowncomments']);
+
 
 
 

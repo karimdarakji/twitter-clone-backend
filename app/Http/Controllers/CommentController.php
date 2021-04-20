@@ -21,16 +21,26 @@ class CommentController extends Controller
         $comment->save();
         return $comment;
     }
+    function getowncomments($id)
+    {
+      $get = DB::table('comments')->select('comments.tweet_id',DB::raw('tweets.name,tweets.text,tweets.picture'))
+      ->leftjoin('tweets','comments.tweet_id','=','tweets.id')
+      ->where('comment_by',$id)
+      ->get();
+      return $get;
+
+    }
     function getcomment($tweetid)
     {
-        $get = DB::table('comments')->select('text','comment_by','tweet_id','users.name','users.profile_picture')->join('users','users.id','=','comments.comment_by')->where('tweet_id',$tweetid)->get();
+        $get = DB::table('comments')->select('comments.id','text','comment_by','tweet_id','users.name','users.profile_picture')->join('users','users.id','=','comments.comment_by')->where('tweet_id',$tweetid)->get();
      //   $get = collect($get->toArray())->flatten()->all();
 
         return $get;
     }
-    function deletecomment($user,$tweet_id)
+    function deletecomment($id)
     {
-        $delete = Comment::where('tweet_id',$tweet_id)->where('comment_by',$user)->delete();
+       // $delete = Comment::where('tweet_id',$tweet_id)->where('comment_by',$user)->take(1)->delete();
+       $delete = Comment::where('id',$id)->take(1)->delete();
         if($delete)
         {
         return ["delete"=>"you unliked"];

@@ -26,18 +26,25 @@ class TweetController extends Controller
         
         return $tweet;
     }
+    function getowntweets($id)
+    {
+        $user = Tweets::select('name','text')->where('tweet_id',$id)->orderBy('created_at','desc')->get();
+        return $user;
+    }
     function gettweets($id){
     
        $user = Follow::select('receiver_id','sender_id')->where('sender_id',$id)->get();
        $user = collect($user->toArray())->flatten()->all();
-       $tweet = DB::table('tweets')->select('tweets.id','tweets.tweet_id','name','tweets.text','picture',DB::raw('COUNT(likes.liked_by) as likes'),DB::raw('COUNT(comments.comment_by) as comments'))
-      
+       $tweet = DB::table('tweets')->groupBy('tweets.id','tweets.tweet_id','tweets.name','tweets.text','tweets.picture')
+
+       ->select('tweets.id','tweets.tweet_id','tweets.name','tweets.text','tweets.picture',DB::raw('COUNT( DISTINCT likes.liked_by) as likes'),DB::raw('COUNT( distinct comments.comment_by) as comments'))
+       ->leftjoin('likes','tweets.id','=','likes.tweet_id')
        ->leftjoin('comments','comments.tweet_id','=','tweets.id')
-       ->leftjoin('likes','likes.tweet_id','=','tweets.id')
-       ->groupBy('tweets.id','tweets.tweet_id','name','tweets.text','picture')
+       
        
        ->whereIn('tweets.tweet_id',$user)
        ->orderBy('tweets.created_at','desc')
+       ->distinct('tweets.id')
        ->get();
         return $tweet;
     }
